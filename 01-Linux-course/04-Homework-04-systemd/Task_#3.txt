@@ -1,0 +1,205 @@
+3. Add the official MySQL Community repository and install the MySQL server package
+
+=============================================================================================================
+a) Add the MySQL package on server
+=============================================================================================================
+
+[Ilya@homepc Homework]$ scp /home/Ilya/Downloads/mysql-apt-config_0.8.20-1_all.deb  ilya@epamtrmachine_03:~/
+ilya@epamtrmachine_03's password: 
+mysql-apt-config_0.8.20-1_all.deb                                                                                                                                                                                           100%   35KB  14.7MB/s   00:00    
+[Ilya@homepc Homework]$ 
+
+=============================================================================================================
+b) Istall the MySQL package
+=============================================================================================================
+
+ilya@epamtrmachine03:~$ sudo dpkg -i mysql-apt-config_0.8.20-1_all.deb 
+[sudo] password for ilya: 
+Selecting previously unselected package mysql-apt-config.
+(Reading database ... 108243 files and directories currently installed.)
+Preparing to unpack mysql-apt-config_0.8.20-1_all.deb ...
+Unpacking mysql-apt-config (0.8.20-1) ...
+Setting up mysql-apt-config (0.8.20-1) ...
+Warning: apt-key should not be used in scripts (called from postinst maintainerscript of the package mysql-apt-config)
+OK
+
+=============================================================================================================
+c) Update package information
+=============================================================================================================
+
+ilya@epamtrmachine03:~$ sudo apt update
+Hit:1 http://ru.archive.ubuntu.com/ubuntu focal InRelease
+Hit:2 http://ru.archive.ubuntu.com/ubuntu focal-updates InRelease
+Hit:3 http://ru.archive.ubuntu.com/ubuntu focal-backports InRelease              
+Hit:4 http://ru.archive.ubuntu.com/ubuntu focal-security InRelease                              
+Hit:5 http://nginx.org/packages/ubuntu focal InRelease                                          
+Get:6 http://repo.mysql.com/apt/ubuntu focal InRelease [12.2 kB]          
+Get:7 http://repo.mysql.com/apt/ubuntu focal/mysql-8.0 Sources [955 B]
+Get:8 http://repo.mysql.com/apt/ubuntu focal/mysql-apt-config amd64 Packages [566 B]
+Get:9 http://repo.mysql.com/apt/ubuntu focal/mysql-8.0 amd64 Packages [8398 B]
+Get:10 http://repo.mysql.com/apt/ubuntu focal/mysql-tools amd64 Packages [6944 B]
+Fetched 29.1 kB in 3s (10.7 kB/s)  
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+5 packages can be upgraded. Run 'apt list --upgradable' to see them.
+
+=============================================================================================================
+d) Install MySQL
+=============================================================================================================
+
+ilya@epamtrmachine03:~$ sudo apt install mysql-server
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  libmecab2 mecab-ipadic mecab-ipadic-utf8 mecab-utils mysql-client mysql-common mysql-community-client mysql-community-client-core mysql-community-client-plugins mysql-community-server mysql-community-server-core
+The following NEW packages will be installed:
+  libmecab2 mecab-ipadic mecab-ipadic-utf8 mecab-utils mysql-client mysql-common mysql-community-client mysql-community-client-core mysql-community-client-plugins mysql-community-server mysql-community-server-core mysql-server
+0 upgraded, 12 newly installed, 0 to remove and 5 not upgraded.
+Need to get 34.1 MB of archives.
+After this operation, 285 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 libmecab2 amd64 0.996-10build1 [233 kB]
+Get:2 http://repo.mysql.com/apt/ubuntu focal/mysql-8.0 amd64 mysql-common amd64 8.0.27-1ubuntu20.04 [68.7 kB]
+Get:3 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 mecab-utils amd64 0.996-10build1 [4912 B]
+Get:4 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 mecab-ipadic all 2.7.0-20070801+main-2.1 [6714 kB]
+Get:5 http://repo.mysql.com/apt/ubuntu focal/mysql-8.0 amd64 mysql-community-client-plugins amd64 8.0.27-1ubuntu20.04 [1226 kB]
+Get:6 http://ru.archive.ubuntu.com/ubuntu focal/main amd64 mecab-ipadic-utf8 all 2.7.0-20070801+main-2.1 [4380 B]
+Get:7 http://repo.mysql.com/apt/ubuntu focal/mysql-8.0 amd64 mysql-community-client-core amd64 8.0.27-1ubuntu20.04 [1779 kB]
+Get:8 http://repo.mysql.com/apt/ubuntu focal/mysql-8.0 amd64 mysql-community-client amd64 8.0.27-1ubuntu20.04 [2932 kB]
+Get:9 http://repo.mysql.com/apt/ubuntu focal/mysql-8.0 amd64 mysql-client amd64 8.0.27-1ubuntu20.04 [65.0 kB]
+Get:10 http://repo.mysql.com/apt/ubuntu focal/mysql-8.0 amd64 mysql-community-server-core amd64 8.0.27-1ubuntu20.04 [20.9 MB]
+Get:11 http://repo.mysql.com/apt/ubuntu focal/mysql-8.0 amd64 mysql-community-server amd64 8.0.27-1ubuntu20.04 [76.2 kB]                                                                                                                                     
+Get:12 http://repo.mysql.com/apt/ubuntu focal/mysql-8.0 amd64 mysql-server amd64 8.0.27-1ubuntu20.04 [65.0 kB]                                                                                                                                               
+Fetched 34.1 MB in 9s (3959 kB/s)                                                                                                                                                                                                                            
+Preconfiguring packages ...
+Selecting previously unselected package mysql-common.
+(Reading database ... 108248 files and directories currently installed.)
+Preparing to unpack .../00-mysql-common_8.0.27-1ubuntu20.04_amd64.deb ...
+Unpacking mysql-common (8.0.27-1ubuntu20.04) ...
+Selecting previously unselected package mysql-community-client-plugins.
+Preparing to unpack .../01-mysql-community-client-plugins_8.0.27-1ubuntu20.04_amd64.deb ...
+Unpacking mysql-community-client-plugins (8.0.27-1ubuntu20.04) ...
+Selecting previously unselected package mysql-community-client-core.
+Preparing to unpack .../02-mysql-community-client-core_8.0.27-1ubuntu20.04_amd64.deb ...
+Unpacking mysql-community-client-core (8.0.27-1ubuntu20.04) ...
+Selecting previously unselected package mysql-community-client.
+Preparing to unpack .../03-mysql-community-client_8.0.27-1ubuntu20.04_amd64.deb ...
+Unpacking mysql-community-client (8.0.27-1ubuntu20.04) ...
+Selecting previously unselected package mysql-client.
+Preparing to unpack .../04-mysql-client_8.0.27-1ubuntu20.04_amd64.deb ...
+Unpacking mysql-client (8.0.27-1ubuntu20.04) ...
+Selecting previously unselected package libmecab2:amd64.
+Preparing to unpack .../05-libmecab2_0.996-10build1_amd64.deb ...
+Unpacking libmecab2:amd64 (0.996-10build1) ...
+Selecting previously unselected package mysql-community-server-core.
+Preparing to unpack .../06-mysql-community-server-core_8.0.27-1ubuntu20.04_amd64.deb ...
+Unpacking mysql-community-server-core (8.0.27-1ubuntu20.04) ...
+Selecting previously unselected package mysql-community-server.
+Preparing to unpack .../07-mysql-community-server_8.0.27-1ubuntu20.04_amd64.deb ...
+Unpacking mysql-community-server (8.0.27-1ubuntu20.04) ...
+Selecting previously unselected package mecab-utils.
+Preparing to unpack .../08-mecab-utils_0.996-10build1_amd64.deb ...
+Unpacking mecab-utils (0.996-10build1) ...
+Selecting previously unselected package mecab-ipadic.
+Preparing to unpack .../09-mecab-ipadic_2.7.0-20070801+main-2.1_all.deb ...
+Unpacking mecab-ipadic (2.7.0-20070801+main-2.1) ...
+Selecting previously unselected package mecab-ipadic-utf8.
+Preparing to unpack .../10-mecab-ipadic-utf8_2.7.0-20070801+main-2.1_all.deb ...
+Unpacking mecab-ipadic-utf8 (2.7.0-20070801+main-2.1) ...
+Selecting previously unselected package mysql-server.
+Preparing to unpack .../11-mysql-server_8.0.27-1ubuntu20.04_amd64.deb ...
+Unpacking mysql-server (8.0.27-1ubuntu20.04) ...
+Setting up libmecab2:amd64 (0.996-10build1) ...
+Setting up mysql-common (8.0.27-1ubuntu20.04) ...
+update-alternatives: using /etc/mysql/my.cnf.fallback to provide /etc/mysql/my.cnf (my.cnf) in auto mode
+Setting up mysql-community-server-core (8.0.27-1ubuntu20.04) ...
+Setting up mecab-utils (0.996-10build1) ...
+Setting up mysql-community-client-plugins (8.0.27-1ubuntu20.04) ...
+Setting up mecab-ipadic (2.7.0-20070801+main-2.1) ...
+Compiling IPA dictionary for Mecab.  This takes long time...
+reading /usr/share/mecab/dic/ipadic/unk.def ... 40
+emitting double-array: 100% |###########################################| 
+/usr/share/mecab/dic/ipadic/model.def is not found. skipped.
+reading /usr/share/mecab/dic/ipadic/Noun.proper.csv ... 27328
+reading /usr/share/mecab/dic/ipadic/Noun.number.csv ... 42
+reading /usr/share/mecab/dic/ipadic/Noun.name.csv ... 34202
+reading /usr/share/mecab/dic/ipadic/Adnominal.csv ... 135
+reading /usr/share/mecab/dic/ipadic/Prefix.csv ... 221
+reading /usr/share/mecab/dic/ipadic/Noun.adverbal.csv ... 795
+reading /usr/share/mecab/dic/ipadic/Postp.csv ... 146
+reading /usr/share/mecab/dic/ipadic/Noun.csv ... 60477
+reading /usr/share/mecab/dic/ipadic/Noun.org.csv ... 16668
+reading /usr/share/mecab/dic/ipadic/Noun.verbal.csv ... 12146
+reading /usr/share/mecab/dic/ipadic/Conjunction.csv ... 171
+reading /usr/share/mecab/dic/ipadic/Verb.csv ... 130750
+reading /usr/share/mecab/dic/ipadic/Noun.nai.csv ... 42
+reading /usr/share/mecab/dic/ipadic/Noun.adjv.csv ... 3328
+reading /usr/share/mecab/dic/ipadic/Filler.csv ... 19
+reading /usr/share/mecab/dic/ipadic/Noun.demonst.csv ... 120
+reading /usr/share/mecab/dic/ipadic/Adverb.csv ... 3032
+reading /usr/share/mecab/dic/ipadic/Noun.others.csv ... 151
+reading /usr/share/mecab/dic/ipadic/Adj.csv ... 27210
+reading /usr/share/mecab/dic/ipadic/Noun.place.csv ... 72999
+reading /usr/share/mecab/dic/ipadic/Postp-col.csv ... 91
+reading /usr/share/mecab/dic/ipadic/Others.csv ... 2
+reading /usr/share/mecab/dic/ipadic/Interjection.csv ... 252
+reading /usr/share/mecab/dic/ipadic/Symbol.csv ... 208
+reading /usr/share/mecab/dic/ipadic/Suffix.csv ... 1393
+reading /usr/share/mecab/dic/ipadic/Auxil.csv ... 199
+emitting double-array: 100% |###########################################| 
+reading /usr/share/mecab/dic/ipadic/matrix.def ... 1316x1316
+emitting matrix      : 100% |###########################################| 
+
+done!
+update-alternatives: using /var/lib/mecab/dic/ipadic to provide /var/lib/mecab/dic/debian (mecab-dictionary) in auto mode
+Setting up mysql-community-client-core (8.0.27-1ubuntu20.04) ...
+Setting up mecab-ipadic-utf8 (2.7.0-20070801+main-2.1) ...
+Compiling IPA dictionary for Mecab.  This takes long time...
+reading /usr/share/mecab/dic/ipadic/unk.def ... 40
+emitting double-array: 100% |###########################################| 
+/usr/share/mecab/dic/ipadic/model.def is not found. skipped.
+reading /usr/share/mecab/dic/ipadic/Noun.proper.csv ... 27328
+reading /usr/share/mecab/dic/ipadic/Noun.number.csv ... 42
+reading /usr/share/mecab/dic/ipadic/Noun.name.csv ... 34202
+reading /usr/share/mecab/dic/ipadic/Adnominal.csv ... 135
+reading /usr/share/mecab/dic/ipadic/Prefix.csv ... 221
+reading /usr/share/mecab/dic/ipadic/Noun.adverbal.csv ... 795
+reading /usr/share/mecab/dic/ipadic/Postp.csv ... 146
+reading /usr/share/mecab/dic/ipadic/Noun.csv ... 60477
+reading /usr/share/mecab/dic/ipadic/Noun.org.csv ... 16668
+reading /usr/share/mecab/dic/ipadic/Noun.verbal.csv ... 12146
+reading /usr/share/mecab/dic/ipadic/Conjunction.csv ... 171
+reading /usr/share/mecab/dic/ipadic/Verb.csv ... 130750
+reading /usr/share/mecab/dic/ipadic/Noun.nai.csv ... 42
+reading /usr/share/mecab/dic/ipadic/Noun.adjv.csv ... 3328
+reading /usr/share/mecab/dic/ipadic/Filler.csv ... 19
+reading /usr/share/mecab/dic/ipadic/Noun.demonst.csv ... 120
+reading /usr/share/mecab/dic/ipadic/Adverb.csv ... 3032
+reading /usr/share/mecab/dic/ipadic/Noun.others.csv ... 151
+reading /usr/share/mecab/dic/ipadic/Adj.csv ... 27210
+reading /usr/share/mecab/dic/ipadic/Noun.place.csv ... 72999
+reading /usr/share/mecab/dic/ipadic/Postp-col.csv ... 91
+reading /usr/share/mecab/dic/ipadic/Others.csv ... 2
+reading /usr/share/mecab/dic/ipadic/Interjection.csv ... 252
+reading /usr/share/mecab/dic/ipadic/Symbol.csv ... 208
+reading /usr/share/mecab/dic/ipadic/Suffix.csv ... 1393
+reading /usr/share/mecab/dic/ipadic/Auxil.csv ... 199
+emitting double-array: 100% |###########################################| 
+reading /usr/share/mecab/dic/ipadic/matrix.def ... 1316x1316
+emitting matrix      : 100% |###########################################| 
+
+done!
+update-alternatives: using /var/lib/mecab/dic/ipadic-utf8 to provide /var/lib/mecab/dic/debian (mecab-dictionary) in auto mode
+Setting up mysql-community-client (8.0.27-1ubuntu20.04) ...
+Setting up mysql-client (8.0.27-1ubuntu20.04) ...
+Setting up mysql-community-server (8.0.27-1ubuntu20.04) ...
+update-alternatives: using /etc/mysql/mysql.cnf to provide /etc/mysql/my.cnf (my.cnf) in auto mode
+Created symlink /etc/systemd/system/multi-user.target.wants/mysql.service → /lib/systemd/system/mysql.service.
+Setting up mysql-server (8.0.27-1ubuntu20.04) ...
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for libc-bin (2.31-0ubuntu9.2) ...
+
+
+

@@ -1,0 +1,483 @@
+3) Use the ps utility to find the processes that are using the maximum memory / CPU on Linux.
+
+#Top CPU consumers  
+[Ilya@homepc Downloads]$ ps -aux --sort %cpu --width 250 | tail -n 10
+Ilya       16591  1.2  1.5 17536260 248160 ?     SLl  12:08   2:28 /opt/vivaldi/vivaldi-bin --enable-crashpad
+Ilya       16724  1.3  1.6 38433516 273020 ?     Sl   12:08   2:44 /opt/vivaldi/vivaldi-bin --type=renderer --enable-crashpad --crashpad-handler-pid=16599 --enable-crash-reporter=,stable --cross-origin-webassembly-module-sharing-allowed --display-cap
+Ilya        3498  1.4  1.2 2919060 205128 ?      Sl   10:11   4:30 /usr/lib64/firefox/firefox -contentproc -childID 2 -isForBrowser -prefsLen 231 -prefMapSize 249625 -jsInit 278680 -parentBuildID 20211101135957 -appdir /usr/lib64/firefox/browser 3314
+Ilya        2049  1.8  0.6 25509376 104084 tty2  Sl+  10:09   5:43 /usr/libexec/Xorg vt2 -displayfd 3 -auth /run/user/1000/gdm/Xauthority -nolisten tcp -background none -noreset -keeptty -novtswitch -verbose 3
+Ilya        2179  2.4  3.3 5236464 549048 ?      Ssl  10:09   7:37 /usr/bin/gnome-shell
+Ilya        2256  3.0  0.3 290616 50836 ?        S<Lsl 10:09   9:30 /usr/bin/pipewire-pulse
+Ilya        4783  5.7  2.5 3082420 421996 ?      Sl   10:14  17:47 /usr/lib64/firefox/firefox -contentproc -childID 8 -isForBrowser -prefsLen 8369 -prefMapSize 249625 -jsInit 278680 -parentBuildID 20211101135957 -appdir /usr/lib64/firefox/browser 331
+Ilya       17030 10.3  2.0 3089964 340760 ?      Sl   12:09  20:14 /usr/lib64/firefox/firefox -contentproc -childID 19 -isForBrowser -prefsLen 9522 -prefMapSize 249625 -jsInit 278680 -parentBuildID 20211101135957 -appdir /usr/lib64/firefox/browser 33
+Ilya        3314 10.9  5.5 4381436 906724 ?      Sl   10:11  34:22 /usr/lib64/firefox/firefox
+Ilya       16010 17.2 13.3 6020776 2168760 ?     Sl   12:01  35:02 /usr/lib/vmware/bin/vmware-vmx -s vmx.stdio.keep=TRUE -# product=1;name=VMware Workstation;version=16.2.1;buildnumber=18811642;licensename=VMware Workstation;licenseversion=16.0; -@ d
+
+#Top memory consumers
+[Ilya@homepc Downloads]$ ps -aux --sort %mem --width 250 | tail -n 10
+Ilya       16724  1.3  1.6 38433516 273536 ?     Sl   12:08   2:45 /opt/vivaldi/vivaldi-bin --type=renderer --enable-crashpad --crashpad-handler-pid=16599 --enable-crash-reporter=,stable --cross-origin-webassembly-module-sharing-allowed --display-cap
+Ilya       16907  0.1  1.8 30033004 303908 ?     Sl   12:08   0:24 /opt/vivaldi/vivaldi-bin --type=renderer --enable-crashpad --crashpad-handler-pid=16599 --enable-crash-reporter=,stable --cross-origin-webassembly-module-sharing-allowed --display-cap
+Ilya       17363  0.5  2.0 1820108 329992 ?      Sl   12:11   1:10 /usr/lib64/libreoffice/program/soffice.bin --impress file:///home/Ilya/Documents/DevOps/EPAM/02_Linux/Presentation/Topic%203_Basic%20monitoring.%20Memory_Presentation.pptx --splash-pi
+Ilya       17030  9.9  2.0 3090788 341256 ?      Sl   12:09  20:15 /usr/lib64/firefox/firefox -contentproc -childID 19 -isForBrowser -prefsLen 9522 -prefMapSize 249625 -jsInit 278680 -parentBuildID 20211101135957 -appdir /usr/lib64/firefox/browser 33
+Ilya        4783  5.9  2.3 3077596 378652 ?      Sl   10:14  19:02 /usr/lib64/firefox/firefox -contentproc -childID 8 -isForBrowser -prefsLen 8369 -prefMapSize 249625 -jsInit 278680 -parentBuildID 20211101135957 -appdir /usr/lib64/firefox/browser 331
+Ilya        4311  1.1  2.7 3195800 445544 ?      Sl   10:13   3:39 /usr/lib64/firefox/firefox -contentproc -childID 6 -isForBrowser -prefsLen 8369 -prefMapSize 249625 -jsInit 278680 -parentBuildID 20211101135957 -appdir /usr/lib64/firefox/browser 331
+Ilya        2179  2.4  3.3 5236464 549096 ?      Ssl  10:09   7:50 /usr/bin/gnome-shell
+root        1689  0.1  3.8 1313756 630512 ?      Ssl  10:08   0:38 /usr/libexec/packagekitd
+Ilya        3314 10.9  5.8 4407188 958256 ?      Sl   10:11  35:11 /usr/lib64/firefox/firefox
+Ilya       16010 16.7 13.3 6020776 2169024 ?     Sl   12:01  35:15 /usr/lib/vmware/bin/vmware-vmx -s vmx.stdio.keep=TRUE -# product=1;name=VMware Workstation;version=16.2.1;buildnumber=18811642;licensename=VMware Workstation;licenseversion=16.0; -@ d
+
+
+5)Using lsof and kill kill all processes of the selected user
+
+On ilya's tab:
+
+ilya@epamtrmachine03:~$ sudo kill -9 $(sudo lsof -t -u epam)
+
+On epam's tab:
+
+64 bytes from 8.8.8.8: icmp_seq=1000 ttl=128 time=60.3 ms
+64 bytes from 8.8.8.8: icmp_seq=1001 ttl=128 time=59.7 ms
+64 bytes from 8.8.8.8: icmp_seq=1002 ttl=128 time=59.0 ms
+64 bytes from 8.8.8.8: icmp_seq=1003 ttl=128 time=58.7 ms
+64 bytes from 8.8.8.8: icmp_seq=1004 ttl=128 time=57.7 ms
+64 bytes from 8.8.8.8: icmp_seq=1005 ttl=128 time=56.6 ms
+64 bytes from 8.8.8.8: icmp_seq=1006 ttl=128 time=62.8 ms
+64 bytes from 8.8.8.8: icmp_seq=1007 ttl=128 time=64.5 ms
+64 bytes from 8.8.8.8: icmp_seq=1008 ttl=128 time=61.1 ms
+64 bytes from 8.8.8.8: icmp_seq=1009 ttl=128 time=63.0 ms
+64 bytes from 8.8.8.8: icmp_seq=1010 ttl=128 time=61.0 ms
+64 bytes from 8.8.8.8: icmp_seq=1011 ttl=128 time=62.5 ms
+64 bytes from 8.8.8.8: icmp_seq=1012 ttl=128 time=61.0 ms
+64 bytes from 8.8.8.8: icmp_seq=1013 ttl=128 time=59.1 ms
+64 bytes from 8.8.8.8: icmp_seq=1014 ttl=128 time=61.0 ms
+64 bytes from 8.8.8.8: icmp_seq=1015 ttl=128 time=58.7 ms
+64 bytes from 8.8.8.8: icmp_seq=1016 ttl=128 time=60.2 ms
+64 bytes from 8.8.8.8: icmp_seq=1017 ttl=128 time=59.5 ms
+Connection to epamtrmachine_03 closed by remote host.
+Connection to epamtrmachine_03 closed.
+[Ilya@homepc Homework]$ 
+
+
+
+4) Use the ps utility to display the process tree
+[Ilya@homepc Downloads]$ ps -e --forest
+    PID TTY          TIME CMD
+      2 ?        00:00:00 kthreadd
+      3 ?        00:00:00  \_ rcu_gp
+      4 ?        00:00:00  \_ rcu_par_gp
+      6 ?        00:00:00  \_ kworker/0:0H-events_highpri
+      9 ?        00:00:00  \_ mm_percpu_wq
+     10 ?        00:00:00  \_ rcu_tasks_kthre
+     11 ?        00:00:00  \_ rcu_tasks_rude_
+     12 ?        00:00:00  \_ rcu_tasks_trace
+     13 ?        00:00:00  \_ ksoftirqd/0
+     14 ?        00:00:07  \_ rcu_sched
+     15 ?        00:00:00  \_ migration/0
+     16 ?        00:00:00  \_ cpuhp/0
+     17 ?        00:00:00  \_ cpuhp/1
+     18 ?        00:00:00  \_ migration/1
+     19 ?        00:00:00  \_ ksoftirqd/1
+     21 ?        00:00:00  \_ kworker/1:0H-kblockd
+     22 ?        00:00:00  \_ cpuhp/2
+     23 ?        00:00:00  \_ migration/2
+     24 ?        00:00:00  \_ ksoftirqd/2
+     26 ?        00:00:00  \_ kworker/2:0H-events_highpri
+     27 ?        00:00:00  \_ cpuhp/3
+     28 ?        00:00:00  \_ migration/3
+     29 ?        00:00:00  \_ ksoftirqd/3
+     31 ?        00:00:00  \_ kworker/3:0H-events_highpri
+     32 ?        00:00:00  \_ cpuhp/4
+     33 ?        00:00:00  \_ migration/4
+     34 ?        00:00:00  \_ ksoftirqd/4
+     36 ?        00:00:00  \_ kworker/4:0H-events_highpri
+     37 ?        00:00:00  \_ cpuhp/5
+     38 ?        00:00:00  \_ migration/5
+     39 ?        00:00:00  \_ ksoftirqd/5
+     41 ?        00:00:00  \_ kworker/5:0H-events_highpri
+     42 ?        00:00:00  \_ cpuhp/6
+     43 ?        00:00:00  \_ migration/6
+     44 ?        00:00:00  \_ ksoftirqd/6
+     46 ?        00:00:00  \_ kworker/6:0H-events_highpri
+     47 ?        00:00:00  \_ cpuhp/7
+     48 ?        00:00:00  \_ migration/7
+     49 ?        00:00:00  \_ ksoftirqd/7
+     51 ?        00:00:00  \_ kworker/7:0H-events_highpri
+     52 ?        00:00:00  \_ cpuhp/8
+     53 ?        00:00:00  \_ migration/8
+     54 ?        00:00:00  \_ ksoftirqd/8
+     56 ?        00:00:00  \_ kworker/8:0H-kblockd
+     57 ?        00:00:00  \_ cpuhp/9
+     58 ?        00:00:00  \_ migration/9
+     59 ?        00:00:00  \_ ksoftirqd/9
+     61 ?        00:00:00  \_ kworker/9:0H-kblockd
+     62 ?        00:00:00  \_ cpuhp/10
+     63 ?        00:00:00  \_ migration/10
+     64 ?        00:00:00  \_ ksoftirqd/10
+     66 ?        00:00:00  \_ kworker/10:0H-events_highpri
+     67 ?        00:00:00  \_ cpuhp/11
+     68 ?        00:00:00  \_ migration/11
+     69 ?        00:00:00  \_ ksoftirqd/11
+     71 ?        00:00:00  \_ kworker/11:0H-kblockd
+     72 ?        00:00:00  \_ kdevtmpfs
+     73 ?        00:00:00  \_ netns
+     74 ?        00:00:00  \_ inet_frag_wq
+     75 ?        00:00:00  \_ kauditd
+     76 ?        00:00:00  \_ oom_reaper
+     77 ?        00:00:00  \_ writeback
+     78 ?        00:00:00  \_ kcompactd0
+     79 ?        00:00:00  \_ ksmd
+     80 ?        00:00:00  \_ khugepaged
+    108 ?        00:00:00  \_ cryptd
+    153 ?        00:00:00  \_ kintegrityd
+    154 ?        00:00:00  \_ kblockd
+    155 ?        00:00:00  \_ blkcg_punt_bio
+    161 ?        00:00:00  \_ tpm_dev_wq
+    162 ?        00:00:00  \_ ata_sff
+    163 ?        00:00:00  \_ md
+    164 ?        00:00:00  \_ edac-poller
+    165 ?        00:00:00  \_ watchdogd
+    167 ?        00:00:00  \_ kworker/2:1H-kblockd
+    172 ?        00:00:00  \_ kswapd0
+    174 ?        00:00:00  \_ kthrotld
+    175 ?        00:00:00  \_ irq/26-aerdrv
+    176 ?        00:00:00  \_ irq/27-aerdrv
+    177 ?        00:00:00  \_ irq/29-aerdrv
+    178 ?        00:00:00  \_ irq/30-aerdrv
+    179 ?        00:00:00  \_ irq/31-aerdrv
+    181 ?        00:00:00  \_ acpi_thermal_pm
+    183 ?        00:00:00  \_ scsi_eh_0
+    184 ?        00:00:00  \_ scsi_tmf_0
+    185 ?        00:00:00  \_ scsi_eh_1
+    186 ?        00:00:00  \_ scsi_tmf_1
+    187 ?        00:00:00  \_ scsi_eh_2
+    188 ?        00:00:00  \_ scsi_tmf_2
+    189 ?        00:00:00  \_ scsi_eh_3
+    190 ?        00:00:00  \_ scsi_tmf_3
+    194 ?        00:00:00  \_ scsi_eh_4
+    195 ?        00:00:00  \_ scsi_tmf_4
+    196 ?        00:00:00  \_ scsi_eh_5
+    197 ?        00:00:00  \_ scsi_tmf_5
+    198 ?        00:00:00  \_ scsi_eh_6
+    199 ?        00:00:00  \_ scsi_tmf_6
+    200 ?        00:00:00  \_ scsi_eh_7
+    201 ?        00:00:00  \_ scsi_tmf_7
+    202 ?        00:00:00  \_ scsi_eh_8
+    203 ?        00:00:00  \_ scsi_tmf_8
+    204 ?        00:00:00  \_ scsi_eh_9
+    205 ?        00:00:00  \_ scsi_tmf_9
+    213 ?        00:00:00  \_ dm_bufio_cache
+    214 ?        00:00:00  \_ mld
+    216 ?        00:00:00  \_ kworker/5:1H-kblockd
+    217 ?        00:00:00  \_ ipv6_addrconf
+    223 ?        00:00:00  \_ kworker/9:1H-kblockd
+    227 ?        00:00:00  \_ kstrp
+    274 ?        00:00:00  \_ zswap-shrink
+    281 ?        00:00:00  \_ kworker/1:1H-kblockd
+    282 ?        00:00:00  \_ kworker/11:1H-kblockd
+    323 ?        00:00:00  \_ kworker/6:1H-kblockd
+    338 ?        00:00:00  \_ kworker/4:1H-kblockd
+    340 ?        00:00:00  \_ kworker/3:1H-kblockd
+    341 ?        00:00:00  \_ kworker/7:1H-kblockd
+    480 ?        00:00:00  \_ kworker/0:1H-kblockd
+    512 ?        00:00:00  \_ kworker/10:1H-kblockd
+    528 ?        00:00:00  \_ btrfs-worker
+    529 ?        00:00:00  \_ btrfs-worker-hi
+    530 ?        00:00:00  \_ btrfs-delalloc
+    531 ?        00:00:00  \_ btrfs-flush_del
+    532 ?        00:00:00  \_ btrfs-cache
+    533 ?        00:00:00  \_ btrfs-fixup
+    534 ?        00:00:00  \_ btrfs-endio
+    535 ?        00:00:00  \_ btrfs-endio-met
+    536 ?        00:00:00  \_ btrfs-endio-met
+    537 ?        00:00:00  \_ btrfs-endio-rai
+    538 ?        00:00:00  \_ btrfs-rmw
+    539 ?        00:00:00  \_ btrfs-endio-wri
+    540 ?        00:00:00  \_ btrfs-freespace
+    541 ?        00:00:00  \_ btrfs-delayed-m
+    542 ?        00:00:00  \_ btrfs-readahead
+    543 ?        00:00:00  \_ btrfs-qgroup-re
+    544 ?        00:00:00  \_ btrfs-cleaner
+    545 ?        00:00:15  \_ btrfs-transacti
+    634 ?        00:00:00  \_ kworker/8:1H-kblockd
+    854 ?        00:00:00  \_ nv_queue
+    855 ?        00:00:00  \_ nv_queue
+    858 ?        00:00:00  \_ led_workqueue
+    860 ?        00:00:00  \_ cfg80211
+    902 ?        00:00:04  \_ nvidia-modeset/
+    903 ?        00:00:00  \_ nvidia-modeset/
+    905 ?        00:03:01  \_ irq/52-nvidia
+    907 ?        00:00:02  \_ nv_queue
+    920 ?        00:00:00  \_ irq/48-0-0008
+    945 ?        00:00:00  \_ card0-crtc0
+    946 ?        00:00:00  \_ card0-crtc1
+    947 ?        00:00:00  \_ card0-crtc2
+    948 ?        00:00:00  \_ card0-crtc3
+    975 ?        00:00:00  \_ jbd2/sda1-8
+    976 ?        00:00:00  \_ ext4-rsv-conver
+   1004 ?        00:00:00  \_ rpciod
+   1005 ?        00:00:00  \_ xprtiod
+   1115 ?        00:00:00  \_ psimon
+   1317 ?        00:00:00  \_ iprt-VBoxWQueue
+   1322 ?        00:00:00  \_ iprt-VBoxTscThr
+   8407 ?        00:00:00  \_ nvidia
+   8408 ?        00:00:00  \_ irq/46-mei_me
+  14099 ?        00:00:03  \_ kworker/4:1-events
+  14320 ?        00:00:00  \_ kworker/10:1-events
+  14849 ?        00:00:00  \_ kworker/6:2
+  16189 ?        00:00:00  \_ kworker/2:2-events
+  16401 ?        00:00:00  \_ kworker/3:1-events
+  17011 ?        00:00:00  \_ kworker/11:1-events
+  23313 ?        00:00:00  \_ kworker/1:1-events
+  23754 ?        00:00:00  \_ kworker/5:0-events
+  24498 ?        00:00:00  \_ kworker/9:3-events
+  25428 ?        00:00:00  \_ kworker/3:2
+  25874 ?        00:00:00  \_ kworker/10:2-events
+  27353 ?        00:00:01  \_ kworker/u24:0-flush-btrfs-1
+  28690 ?        00:00:00  \_ kworker/4:2
+  29959 ?        00:00:00  \_ kworker/0:2-events
+  32219 ?        00:00:01  \_ kworker/u24:4-blkcg_punt_bio
+  32339 ?        00:00:00  \_ kworker/8:3-events
+  32753 ?        00:00:00  \_ kworker/u24:8-btrfs-worker
+  33225 ?        00:00:01  \_ kworker/u24:3-flush-btrfs-1
+  33681 ?        00:00:00  \_ kworker/7:0-events
+  33867 ?        00:00:00  \_ kworker/u24:6-events_unbound
+  34763 ?        00:00:00  \_ kworker/u24:5-btrfs-endio-write
+  35039 ?        00:00:00  \_ kworker/u24:10-btrfs-endio-write
+  35143 ?        00:00:00  \_ kworker/1:2-events
+  35578 ?        00:00:00  \_ kworker/u24:2-btrfs-worker
+  35583 ?        00:00:00  \_ kworker/2:0
+  35824 ?        00:00:00  \_ kworker/u25:2-btrfs-worker-high
+  35829 ?        00:00:00  \_ kworker/6:1-events
+  35830 ?        00:00:00  \_ kworker/8:1-events
+  35994 ?        00:00:00  \_ kworker/u24:9-btrfs-endio-write
+  36325 ?        00:00:00  \_ kworker/u24:11-flush-btrfs-1
+  36326 ?        00:00:00  \_ kworker/u24:13-btrfs-worker
+  36926 ?        00:00:00  \_ kworker/11:2-events
+  37123 ?        00:00:00  \_ kworker/7:1-mm_percpu_wq
+  37136 ?        00:00:00  \_ kworker/u25:0-btrfs-worker-high
+  37353 ?        00:00:00  \_ kworker/5:1-events
+  37354 ?        00:00:00  \_ kworker/u24:1-flush-btrfs-1
+  37359 ?        00:00:00  \_ kworker/0:0
+  37360 ?        00:00:00  \_ kworker/9:0-events
+  37698 ?        00:00:00  \_ kworker/7:2-mm_percpu_wq
+      1 ?        00:00:02 systemd
+    653 ?        00:00:01 systemd-journal
+    665 ?        00:00:03 systemd-udevd
+    978 ?        00:00:08 mount.ntfs
+    998 ?        00:00:21 systemd-oomd
+    999 ?        00:00:05 systemd-resolve
+   1000 ?        00:00:00 auditd
+   1022 ?        00:00:00 avahi-daemon
+   1051 ?        00:00:00  \_ avahi-daemon
+   1024 ?        00:00:00 low-memory-moni
+   1026 ?        00:00:00 mcelog
+   1028 ?        00:00:01 polkitd
+   1033 ?        00:00:00 rtkit-daemon
+   1034 ?        00:00:00 sssd
+   1175 ?        00:00:00  \_ sssd_be
+   1188 ?        00:00:00  \_ sssd_nss
+   1036 ?        00:00:00 switcheroo-cont
+   1041 ?        00:00:00 systemd-homed
+   1043 ?        00:00:00 systemd-machine
+   1045 ?        00:00:06 udisksd
+   1048 ?        00:00:00 upowerd
+   1057 ?        00:00:00 dbus-broker-lau
+   1093 ?        00:00:01  \_ dbus-broker
+   1070 ?        00:00:00 chronyd
+   1073 ?        00:00:00 abrtd
+   1125 ?        00:00:00 alsactl
+   1138 ?        00:00:00 abrt-dump-journ
+   1140 ?        00:00:00 abrt-dump-journ
+   1141 ?        00:00:00 abrt-dump-journ
+   1142 ?        00:00:00 ModemManager
+   1143 ?        00:00:00 firewalld
+   1162 ?        00:00:00 vmnet-bridge
+   1182 ?        00:00:00 vmnet-netifup
+   1189 ?        00:00:00 vmnet-dhcpd
+   1192 ?        00:00:00 vmnet-natd
+   1194 ?        00:00:00 vmnet-netifup
+   1200 ?        00:00:00 vmnet-dhcpd
+   1224 ?        00:00:00 vmware-authdlau
+   1225 ?        00:00:00 vmware-usbarbit
+   1234 ?        00:00:00 accounts-daemon
+   1235 ?        00:00:00 systemd-logind
+   1261 ?        00:00:02 NetworkManager
+   1278 ?        00:00:00 cupsd
+   1286 ?        00:00:00 gssproxy
+   1387 ?        00:00:00 wpa_supplicant
+   1397 ?        00:00:00 abrt-dbus
+   1441 ?        00:00:00 crond
+   1442 ?        00:00:00 gdm
+   2002 ?        00:00:00  \_ gdm-session-wor
+   2047 tty2     00:00:00      \_ gdm-x-session
+   2049 tty2     00:06:13          \_ Xorg
+   2097 tty2     00:00:00          \_ gnome-session-b
+   2117 ?        00:00:00              \_ ssh-agent
+   1481 ?        00:00:00 systemd-userdbd
+  37533 ?        00:00:00  \_ systemd-userwor
+  37534 ?        00:00:00  \_ systemd-userwor
+  37547 ?        00:00:00  \_ systemd-userwor
+   1506 ?        00:00:00 uresourced
+   1571 ?        00:00:00 dnsmasq
+   1572 ?        00:00:00  \_ dnsmasq
+   1689 ?        00:00:38 packagekitd
+   1832 ?        00:00:00 colord
+   1860 ?        00:00:02 pcscd
+   2019 ?        00:00:00 systemd
+   2025 ?        00:00:00  \_ (sd-pam)
+   2092 ?        00:00:00  \_ dbus-broker-lau
+   2094 ?        00:00:01  |   \_ dbus-broker
+   2140 ?        00:00:00  \_ at-spi-bus-laun
+   2145 ?        00:00:00  |   \_ dbus-broker-lau
+   2146 ?        00:00:00  |       \_ dbus-broker
+   2151 ?        00:00:00  \_ gnome-session-c
+   2152 ?        00:00:00  \_ uresourced
+   2154 ?        00:00:01  \_ gnome-session-b
+   2458 ?        00:00:00  |   \_ gsd-disk-utilit
+   2470 ?        00:00:00  |   \_ evolution-alarm
+   2474 ?        00:01:32  |   \_ guake
+   2726 ?        00:00:00  |   |   \_ bash <defunct>
+   2777 ?        00:00:00  |   |   \_ bash <defunct>
+   2782 pts/2    00:00:00  |   |   \_ bash
+  18954 pts/2    00:00:00  |   |   |   \_ top
+  37881 pts/2    00:00:00  |   |   |   \_ ps
+   2787 ?        00:00:00  |   |   \_ bash <defunct>
+   2793 pts/4    00:00:00  |   |   \_ bash
+  31193 pts/4    00:00:00  |   |   |   \_ man
+  31207 pts/4    00:00:00  |   |   |       \_ less
+   2812 ?        00:00:00  |   |   \_ bash <defunct>
+   2829 pts/6    00:00:00  |   |   \_ bash
+  16520 pts/6    00:00:00  |   |   |   \_ ssh
+  23425 pts/0    00:00:00  |   |   \_ bash
+  23463 pts/0    00:00:00  |   |   |   \_ ssh
+  36211 pts/1    00:00:00  |   |   \_ bash
+  36437 pts/1    00:00:00  |   |       \_ vi
+   2479 ?        00:00:05  |   \_ gnome-software
+   2179 ?        00:08:05  \_ gnome-shell
+   2200 ?        00:00:02  |   \_ ibus-daemon
+   2225 ?        00:00:00  |   |   \_ ibus-dconf
+   2227 ?        00:00:02  |   |   \_ ibus-extension-
+   2575 ?        00:00:00  |   |   \_ ibus-engine-sim
+   3314 ?        00:36:41  |   \_ GeckoMain
+   3406 ?        00:00:00  |   |   \_ Socket Process
+   3498 ?        00:04:47  |   |   \_ WebExtensions
+   3572 ?        00:00:12  |   |   \_ Privileged Cont
+   4311 ?        00:04:06  |   |   \_ Web Content
+   4720 ?        00:04:09  |   |   \_ RDD Process
+   4783 ?        00:20:26  |   |   \_ Web Content
+   5849 ?        00:00:33  |   |   \_ Web Content
+   6366 ?        00:01:45  |   |   \_ Web Content
+  17030 ?        00:20:17  |   |   \_ Web Content
+  30709 ?        00:00:34  |   |   \_ Web Content
+  15920 ?        00:00:13  |   \_ vmware
+  16591 ?        00:02:38  |   \_ vivaldi-bin
+  16596 ?        00:00:00  |   |   \_ cat
+  16597 ?        00:00:00  |   |   \_ cat
+  16605 ?        00:00:00  |   |   \_ vivaldi-bin
+  16631 ?        00:02:22  |   |   |   \_ vivaldi-bin
+  16687 ?        00:00:00  |   |   |       \_ vivaldi-bin
+  16606 ?        00:00:00  |   |   \_ vivaldi-bin
+  16608 ?        00:00:00  |   |   |   \_ vivaldi-bin
+  16635 ?        00:00:00  |   |   |       \_ vivaldi-bin
+  16685 ?        00:00:02  |   |   |       \_ vivaldi-bin
+  16718 ?        00:00:23  |   |   |       \_ vivaldi-bin
+  16724 ?        00:02:48  |   |   |       \_ vivaldi-bin
+  16863 ?        00:00:00  |   |   |       \_ vivaldi-bin
+  16876 ?        00:00:16  |   |   |       \_ vivaldi-bin
+  16907 ?        00:00:24  |   |   |       \_ vivaldi-bin
+  25372 ?        00:01:07  |   |   |       \_ vivaldi-bin
+  16634 ?        00:00:27  |   |   \_ vivaldi-bin
+  16958 ?        00:00:00  |   |   \_ vivaldi-bin
+  28696 ?        00:00:02  |   \_ gnome-calculato
+   2205 ?        00:00:00  \_ xdg-permission-
+   2209 ?        00:00:00  \_ gnome-shell-cal
+   2212 ?        00:00:00  \_ gvfsd
+  10252 ?        00:00:00  |   \_ gvfsd-trash
+  10268 ?        00:00:00  |   \_ gvfsd-network
+  10313 ?        00:00:00  |   \_ gvfsd-dnssd
+  23135 ?        00:00:00  |   \_ gvfsd-http
+   2223 ?        00:00:00  \_ gvfsd-fuse
+   2226 ?        00:00:00  \_ evolution-sourc
+   2230 ?        00:00:00  \_ ibus-x11
+   2240 ?        00:00:00  \_ ibus-portal
+   2252 ?        00:00:04  \_ at-spi2-registr
+   2255 ?        00:03:24  \_ pipewire
+   2270 ?        00:00:00  |   \_ pipewire-media-
+   2256 ?        00:10:24  \_ pipewire-pulse
+   2262 ?        00:00:03  \_ goa-daemon
+   2264 ?        00:00:00  \_ dconf-service
+   2274 ?        00:00:00  \_ gvfsd-metadata
+   2282 ?        00:00:00  \_ gvfs-udisks2-vo
+   2290 ?        00:00:01  \_ evolution-calen
+   2303 ?        00:00:00  \_ gvfs-mtp-volume
+   2310 ?        00:00:00  \_ gvfs-gphoto2-vo
+   2314 ?        00:00:00  \_ gvfs-afc-volume
+   2319 ?        00:00:00  \_ gvfs-goa-volume
+   2338 ?        00:00:01  \_ goa-identity-se
+   2347 ?        00:00:00  \_ evolution-addre
+   2368 ?        00:00:00  \_ gjs
+   2386 ?        00:00:00  \_ gsd-a11y-settin
+   2387 ?        00:00:00  \_ gsd-color
+   2390 ?        00:00:00  \_ gsd-datetime
+   2394 ?        00:00:00  \_ gsd-housekeepin
+   2398 ?        00:00:00  \_ gsd-keyboard
+   2402 ?        00:00:02  \_ gsd-media-keys
+   2407 ?        00:00:00  \_ gsd-power
+   2408 ?        00:00:00  \_ gsd-print-notif
+   2410 ?        00:00:00  \_ gsd-rfkill
+   2411 ?        00:00:00  \_ gsd-screensaver
+   2412 ?        00:00:01  \_ gsd-sharing
+   2415 ?        00:00:01  \_ gsd-smartcard
+   2419 ?        00:00:00  \_ gsd-sound
+   2426 ?        00:00:00  \_ gsd-usb-protect
+   2434 ?        00:00:00  \_ gsd-wacom
+   2436 ?        00:00:00  \_ gsd-xsettings
+   2498 ?        00:00:00  \_ abrt-applet
+   2503 ?        00:00:00  \_ gjs
+   2609 ?        00:00:00  \_ gsd-printer
+   3319 ?        00:00:06  \_ cgroupify
+  12119 ?        00:00:38  \_ nautilus
+  15001 ?        00:00:01  \_ sd_dummy
+  15004 ?        00:00:01  \_ sd_espeak-ng
+  15010 ?        00:00:00  \_ speech-dispatch
+  15956 ?        00:00:14  \_ vmware-tray
+  16010 ?        00:35:31  \_ vmware-vmx
+  16035 ?        00:00:22  |   \_ mksSandbox
+  16090 ?        00:00:01  |   \_ thnuclnt
+  16092 ?        00:00:00  |       \_ thnuclnt
+  16093 ?        00:00:03  |       \_ thnuclnt
+  16095 ?        00:00:00  |           \_ thnuclnt
+  16100 ?        00:00:03  |               \_ thnuclnt
+  16599 ?        00:00:00  \_ chrome_crashpad
+  16601 ?        00:00:00  \_ chrome_crashpad
+  16632 ?        00:00:00  \_ xdg-desktop-por
+  16654 ?        00:00:00  \_ xdg-document-po
+  16658 ?        00:00:00  |   \_ fusermount
+  16663 ?        00:00:01  \_ xdg-desktop-por
+  17330 ?        00:00:00  \_ oosplash
+  17363 ?        00:01:13  |   \_ soffice.bin
+  18285 ?        00:00:00  \_ gnome-calendar
+  18331 ?        00:00:02  \_ tracker-miner-f
+   2037 ?        00:00:00 gnome-keyring-d
+  16524 ?        00:00:00  \_ ssh-agent
+   3071 ?        00:00:00 gpg-agent
+   3084 ?        00:00:00 gpg-agent
+   3102 ?        00:00:00 gpg-agent
+   3125 ?        00:00:00 gpg-agent
+   3136 ?        00:00:00 gpg-agent
+   3149 ?        00:00:00 gpg-agent
+   3162 ?        00:00:00 gpg-agent
+   3217 ?        00:00:00 gpg-agent
+   3230 ?        00:00:00 gpg-agent
+   3245 ?        00:00:00 gpg-agent
+   3255 ?        00:00:00 gpg-agent
+   3270 ?        00:00:00 gpg-agent
+   3294 ?        00:00:00 gpg-agent
+   3307 ?        00:00:00 gpg-agent
+   3346 ?        00:00:00 gpg-agent
+   3528 ?        00:00:00 gpg-agent
+   3662 ?        00:00:00 gpg-agent
+   3678 ?        00:00:00 gpg-agent
+   8462 ?        00:00:12 sssd_kcm
+
+

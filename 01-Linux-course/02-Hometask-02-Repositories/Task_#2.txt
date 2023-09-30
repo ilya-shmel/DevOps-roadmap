@@ -1,0 +1,111 @@
+2.Add the official Nginx repository and install Nginx.
+
+===============================================================================================================
+a) Add the additional packets  
+===============================================================================================================
+
+sudo apt install curl gnupg2 ca-certificates lsb-release ubuntu-archive-keyring
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Package ubuntu-archive-keyring is not available, but is referred to by another package.
+This may mean that the package is missing, has been obsoleted, or
+is only available from another source
+
+E: Package 'ubuntu-archive-keyring' has no installation candidate
+
+===============================================================================================================
+b) Import official key for checking authenticity
+===============================================================================================================
+
+curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
+>     | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1561  100  1561    0     0   4372      0 --:--:-- --:--:-- --:--:--  4360
+
+===============================================================================================================
+c) Check the downloaded key
+===============================================================================================================
+
+gpg --dry-run --quiet --import --import-options import-show /usr/share/keyrings/nginx-archive-keyring.gpg
+gpg: keyblock resource '/home/ilya/.gnupg/pubring.kbx': No such file or directory
+pub   rsa2048 2011-08-19 [SC] [expires: 2024-06-14]
+      573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
+uid                      nginx signing key <signing-key@nginx.com>
+
+===============================================================================================================
+d) Add nginx stable apt-repository 
+===============================================================================================================
+
+cho "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] \
+> http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" \
+>     | sudo tee /etc/apt/sources.list.d/nginx.list
+deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/ubuntu focal nginx
+
+===============================================================================================================
+e) Bind packets from nginx repository
+===============================================================================================================
+
+echo -e "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 900\n" \
+>     | sudo tee /etc/apt/preferences.d/99nginx
+Package: *
+Pin: origin nginx.org
+Pin: release o=nginx
+Pin-Priority: 900
+
+===============================================================================================================
+f) Install nginx
+===============================================================================================================
+
+ilya@epamtrmachine03:~$ sudo apt update
+Hit:1 http://ru.archive.ubuntu.com/ubuntu focal InRelease                          
+Get:2 http://ru.archive.ubuntu.com/ubuntu focal-updates InRelease [114 kB]         
+Get:3 http://nginx.org/packages/ubuntu focal InRelease [2849 B]
+Get:4 http://ru.archive.ubuntu.com/ubuntu focal-backports InRelease [101 kB]
+Get:5 http://ru.archive.ubuntu.com/ubuntu focal-security InRelease [114 kB]
+Get:6 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [1344 kB]
+Get:7 http://nginx.org/packages/ubuntu focal/nginx amd64 Packages [15.0 kB]
+Get:8 http://ru.archive.ubuntu.com/ubuntu focal-updates/main amd64 c-n-f Metadata [14.5 kB]                                                                                                                                                                  
+Get:9 http://ru.archive.ubuntu.com/ubuntu focal-updates/restricted amd64 Packages [569 kB]                                                                                                                                                                   
+Get:10 http://ru.archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [876 kB]                                                                                                                                                                    
+Fetched 3150 kB in 7s (478 kB/s)                                                                                                                                                                                                                             
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+5 packages can be upgraded. Run 'apt list --upgradable' to see them.
+ilya@epamtrmachine03:~$ sudo apt install nginx
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following NEW packages will be installed:
+  nginx
+0 upgraded, 1 newly installed, 0 to remove and 5 not upgraded.
+Need to get 879 kB of archives.
+After this operation, 3117 kB of additional disk space will be used.
+Get:1 http://nginx.org/packages/ubuntu focal/nginx amd64 nginx amd64 1.20.2-1~focal [879 kB]
+Fetched 879 kB in 2s (453 kB/s)
+Selecting previously unselected package nginx.
+(Reading database ... 108209 files and directories currently installed.)
+Preparing to unpack .../nginx_1.20.2-1~focal_amd64.deb ...
+----------------------------------------------------------------------
+
+Thanks for using nginx!
+
+Please find the official documentation for nginx here:
+* https://nginx.org/en/docs/
+
+Please subscribe to nginx-announce mailing list to get
+the most important news about nginx:
+* https://nginx.org/en/support.html
+
+Commercial subscriptions for nginx are available on:
+* https://nginx.com/products/
+
+----------------------------------------------------------------------
+Unpacking nginx (1.20.2-1~focal) ...
+Setting up nginx (1.20.2-1~focal) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service → /lib/systemd/system/nginx.service.
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for systemd (245.4-4ubuntu3.13) ...
+

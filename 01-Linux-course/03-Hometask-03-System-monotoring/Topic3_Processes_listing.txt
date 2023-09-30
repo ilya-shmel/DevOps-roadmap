@@ -1,0 +1,149 @@
+ilya@epamtrmachine03:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=128 time=61.0 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=128 time=59.0 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=128 time=55.5 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=128 time=66.3 ms
+64 bytes from 8.8.8.8: icmp_seq=5 ttl=128 time=64.3 ms
+64 bytes from 8.8.8.8: icmp_seq=6 ttl=128 time=62.7 ms
+64 bytes from 8.8.8.8: icmp_seq=7 ttl=128 time=61.1 ms
+64 bytes from 8.8.8.8: icmp_seq=8 ttl=128 time=56.3 ms
+64 bytes from 8.8.8.8: icmp_seq=9 ttl=128 time=57.2 ms
+64 bytes from 8.8.8.8: icmp_seq=10 ttl=128 time=65.6 ms
+64 bytes from 8.8.8.8: icmp_seq=11 ttl=128 time=63.5 ms
+64 bytes from 8.8.8.8: icmp_seq=12 ttl=128 time=60.2 ms
+^Z
+[1]+  Stopped                 ping 8.8.8.8
+ilya@epamtrmachine03:~$ jobs
+[1]+  Stopped                 ping 8.8.8.8
+ilya@epamtrmachine03:~$ fg
+ping 8.8.8.8
+64 bytes from 8.8.8.8: icmp_seq=13 ttl=128 time=58.1 ms
+64 bytes from 8.8.8.8: icmp_seq=14 ttl=128 time=58.4 ms
+64 bytes from 8.8.8.8: icmp_seq=15 ttl=128 time=56.7 ms
+64 bytes from 8.8.8.8: icmp_seq=16 ttl=128 time=64.7 ms
+64 bytes from 8.8.8.8: icmp_seq=17 ttl=128 time=62.6 ms
+64 bytes from 8.8.8.8: icmp_seq=18 ttl=128 time=60.5 ms
+64 bytes from 8.8.8.8: icmp_seq=19 ttl=128 time=58.9 ms
+64 bytes from 8.8.8.8: icmp_seq=20 ttl=128 time=57.4 ms
+64 bytes from 8.8.8.8: icmp_seq=21 ttl=128 time=56.9 ms
+64 bytes from 8.8.8.8: icmp_seq=22 ttl=128 time=65.7 ms
+64 bytes from 8.8.8.8: icmp_seq=23 ttl=128 time=63.3 ms
+64 bytes from 8.8.8.8: icmp_seq=24 ttl=128 time=61.6 ms
+64 bytes from 8.8.8.8: icmp_seq=25 ttl=128 time=59.7 ms
+^C
+--- 8.8.8.8 ping statistics ---
+26 packets transmitted, 25 received, 3.84615% packet loss, time 38862ms
+rtt min/avg/max/mdev = 55.543/60.688/66.327/3.178 ms
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+5. What factors can be used to determine that our machine is virtual?
+
+1) Search in ps some processes with name "vm" and similar names
+
+root         836  0.0  0.0      0     0 ?        I<   14:31   0:00 [ext4-rsv-conver]
+systemd+     858  0.0  0.3  90228  6140 ?        Ssl  14:31   0:00 /lib/systemd/systemd-timesyncd
+root         868  0.0  0.5  47540 10540 ?        Ss   14:31   0:00 /usr/bin/VGAuthService
+root         869  0.1  0.3 310640  7880 ?        Ssl  14:31   0:08 /usr/bin/vmtoolsd              #weird process
+systemd+     942  0.0  0.3  26604  7620 ?        Ss   14:31   0:00 /lib/systemd/systemd-networkd
+systemd+     944  0.0  0.5  23896 11996 ?        Ss   14:31   0:00 /lib/systemd/systemd-resolved
+
+Then open this path
+
+-rwxr-xr-x 1 root   root       76352 Oct 12 05:53  vmtoolsd
+-rwxr-xr-x 1 root   root       72224 Oct 12 05:53  vmware-alias-import
+-rwxr-xr-x 1 root   root       14720 Oct 12 05:53  vmware-checkvm
+-rwxr-xr-x 1 root   root       14720 Oct 12 05:53  vmware-hgfsclient
+-rwxr-xr-x 1 root   root       22840 Oct 12 05:53  vmware-namespace-cmd
+-rwxr-xr-x 1 root   root       31032 Oct 12 05:53  vmware-rpctool
+-rwxr-xr-x 1 root   root       60000 Oct 12 05:53  vmware-toolbox-cmd
+-rwxr-xr-x 1 root   root       18744 Oct 12 05:53  vmware-vgauth-cmd
+-rwxr-xr-x 1 root   root       23264 Oct 12 05:53  vmware-vmblock-fuse
+-rwxr-xr-x 1 root   root       57752 Oct 12 05:53  vmware-xferlogs
+
+We can see VMware files.
+
+2) Open top and try to monitor steal time. If it more then 0 our system is virtual.
+
+3) Compare CPU information with real specs
+
+ilya@epamtrmachine03:/proc$ cat /proc/cpuinfo
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 63
+model name	: Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz
+stepping	: 2
+microcode	: 0x46
+cpu MHz		: 3298.088
+cache size	: 15360 KB
+physical id	: 0
+siblings	: 2
+core id		: 0
+cpu cores	: 2 						#Only 2 cores instead of 6
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 15
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon nopl xtopology tsc_reliable nonstop_tsc cpuid pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm cpuid_fault invpcid_single pti ssbd ibrs ibpb stibp fsgsbase tsc_adjust bmi1 avx2 smep bmi2 invpcid xsaveopt arat md_clear flush_l1d arch_capabilities
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit
+bogomips	: 6596.17
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 45 bits physical, 48 bits virtual
+power management:
+ 
+
+4) Check the system manufacturer's name
+
+ilya@epamtrmachine03:/proc$ sudo dmidecode -s system-manufacturer
+[sudo] password for ilya: 
+VMware, Inc.
+
+5) Try to detect hypervisor by dmesg
+
+ilya@epamtrmachine03:/proc$ sudo dmesg | grep "Hypervisor detected"
+[    0.000000] Hypervisor detected: VMware
+
+6) Try to use systemd commands
+
+ilya@epamtrmachine03:/proc$ hostnamectl
+   Static hostname: epamtrmachine03
+         Icon name: computer-vm
+           Chassis: vm
+        Machine ID: 5469eb2e56294587b09580c74ebb717f
+           Boot ID: d29c531a639c486b86674a800f9f50b2
+    Virtualization: vmware
+  Operating System: Ubuntu 20.04.3 LTS
+            Kernel: Linux 5.4.0-90-generic
+      Architecture: x86-64
+
+7) Try to search type of vizualization 
+
+ilya@epamtrmachine03:/proc$ systemd-detect-virt
+vmware
+
+8) Search syslog and try to find in first 5% information about hypervisor
+
+Nov 18 10:33:48 epamtrmachine03 kernel: [    0.000000] NX (Execute Disable) protection: active
+Nov 18 10:33:48 epamtrmachine03 kernel: [    0.000000] SMBIOS 2.7 present.
+Nov 18 10:33:48 epamtrmachine03 kernel: [    0.000000] DMI: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
+Nov 18 10:33:48 epamtrmachine03 kernel: [    0.000000] vmware: hypercall mode: 0x02
+Nov 18 10:33:48 epamtrmachine03 kernel: [    0.000000] Hypervisor detected: VMware
+Nov 18 10:33:48 epamtrmachine03 kernel: [    0.000000] vmware: TSC freq read from hypervisor : 3298.087 MHz
+Nov 18 10:33:48 epamtrmachine03 kernel: [    0.000000] vmware: Host bus clock speed read from hypervisor : 66000000 Hz
+Nov 18 10:33:48 epamtrmachine03 kernel: [    0.000000] vmware: using sched offset of 6379097170 ns
+ 
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+6. What factors can be used to identify problems with the read / write subsystem?
+
+Search red information in syslog about devices sda, sdb etc. 
+
+Use iotop to see Disk Write and Disk Read parameters. 
+

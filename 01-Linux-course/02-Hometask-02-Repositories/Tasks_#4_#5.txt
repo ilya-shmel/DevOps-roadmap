@@ -1,0 +1,94 @@
+4. Set nginx and mysql-server to run on boot, check service status after rebooting the system
+
+====================================================================================================
+a) Add services to autostart 
+====================================================================================================
+
+ilya@epamtrmachine03:~$ systemctl enable nginx
+
+Synchronizing state of nginx.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install enable nginx
+==== AUTHENTICATING FOR org.freedesktop.systemd1.reload-daemon ===
+Authentication is required to reload the systemd state.
+Authenticating as: Ilya Shmadchenko (ilya)
+Password: 
+==== AUTHENTICATION COMPLETE ===
+==== AUTHENTICATING FOR org.freedesktop.systemd1.reload-daemon ===
+Authentication is required to reload the systemd state.
+Authenticating as: Ilya Shmadchenko (ilya)
+Password: 
+==== AUTHENTICATION COMPLETE ===
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-unit-files ===
+Authentication is required to manage system service or unit files.
+Authenticating as: Ilya Shmadchenko (ilya)
+Password: 
+==== AUTHENTICATION COMPLETE ===
+==== AUTHENTICATING FOR org.freedesktop.systemd1.reload-daemon ===
+Authentication is required to reload the systemd state.
+Authenticating as: Ilya Shmadchenko (ilya)
+Password: 
+==== AUTHENTICATION COMPLETE ===
+
+
+ilya@epamtrmachine03:~$ sudo systemctl enable mysql
+[sudo] password for ilya: 
+ilya@epamtrmachine03:~$ 
+
+====================================================================================================
+b) Check services status after reboot
+====================================================================================================
+
+lya@epamtrmachine03:~$ sudo systemctl status mysql
+[sudo] password for ilya: 
+● mysql.service - MySQL Community Server
+     Loaded: loaded (/lib/systemd/system/mysql.service; enabled; vendor preset: enabled)
+     Active: active (running) since Mon 2021-11-22 15:26:49 UTC; 1min 16s ago
+       Docs: man:mysqld(8)
+             http://dev.mysql.com/doc/refman/en/using-systemd.html
+    Process: 933 ExecStartPre=/usr/share/mysql-8.0/mysql-systemd-start pre (code=exited, status=0/SUCCESS)
+   Main PID: 1006 (mysqld)
+     Status: "Server is operational"
+      Tasks: 37 (limit: 2245)
+     Memory: 414.9M
+     CGroup: /system.slice/mysql.service
+             └─1006 /usr/sbin/mysqld
+
+Nov 22 15:26:46 epamtrmachine03 systemd[1]: Starting MySQL Community Server...
+Nov 22 15:26:49 epamtrmachine03 systemd[1]: Started MySQL Community Server.
+ilya@epamtrmachine03:~$ sudo systemctl status nginx
+● nginx.service - nginx - high performance web server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: active (running) since Mon 2021-11-22 15:26:47 UTC; 1min 31s ago
+       Docs: https://nginx.org/en/docs/
+    Process: 937 ExecStart=/usr/sbin/nginx -c /etc/nginx/nginx.conf (code=exited, status=0/SUCCESS)
+   Main PID: 1011 (nginx)
+      Tasks: 3 (limit: 2245)
+     Memory: 4.4M
+     CGroup: /system.slice/nginx.service
+             ├─1011 nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf
+             ├─1013 nginx: worker process
+             └─1014 nginx: worker process
+
+Nov 22 15:26:46 epamtrmachine03 systemd[1]: Starting nginx - high performance web server...
+Nov 22 15:26:47 epamtrmachine03 systemd[1]: Started nginx - high performance web server.
+
+====================================================================================================
+5. Check start up messages through journalctl
+====================================================================================================
+
+ilya@epamtrmachine03:~$ journalctl --boot --unit=nginx
+-- Logs begin at Thu 2021-09-16 09:22:24 UTC, end at Mon 2021-11-22 15:35:22 UTC. --
+Nov 22 15:26:46 epamtrmachine03 systemd[1]: Starting nginx - high performance web server...
+Nov 22 15:26:47 epamtrmachine03 systemd[1]: Started nginx - high performance web server.
+
+ilya@epamtrmachine03:~$ journalctl --unit=mysql
+-- Logs begin at Thu 2021-09-16 09:22:24 UTC, end at Mon 2021-11-22 16:53:16 UTC. --
+Nov 22 15:03:10 epamtrmachine03 systemd[1]: Starting MySQL Community Server...
+Nov 22 15:03:11 epamtrmachine03 systemd[1]: Started MySQL Community Server.
+Nov 22 15:26:24 epamtrmachine03 systemd[1]: Stopping MySQL Community Server...
+Nov 22 15:26:29 epamtrmachine03 systemd[1]: mysql.service: Succeeded.
+Nov 22 15:26:29 epamtrmachine03 systemd[1]: Stopped MySQL Community Server.
+-- Reboot --
+Nov 22 15:26:46 epamtrmachine03 systemd[1]: Starting MySQL Community Server...
+Nov 22 15:26:49 epamtrmachine03 systemd[1]: Started MySQL Community Server.
+

@@ -1,0 +1,122 @@
+#Arithmetic operators
+
+a = 100
+b = 5.5
+
+sum = a + b
+sub = a - b
+multi = a * b
+div_float = a / b
+modulus = a % b
+power = a ** b
+div_floor = a // b
+
+print(f"The summon is {sum}")
+print(f"The substraction is {sub}")
+print(f"The multiplication is {multi}")
+print(f"The division float is {div_float}")
+print(f"The modulus is {modulus}")
+print(f"The power is {power}")
+print(f"The division floor is {div_floor}")
+
+
+#Comparison and logical operators
+
+if (div_float/div_floor) > 1.2:
+    print ("Div_float is really bigger!")
+elif (div_float/div_floor) < 1.2:
+    print(("Div_float isn't so bigger!"))
+else:
+    print("Oooops!!!")
+
+if (sub+0.5) == 95:
+    print("Subtraction is almost 95!")
+
+if (multi != 1000) and (power >= 1000000):
+    print("There is big numbers")
+
+if (div_floor <= div_float) or (modulus < 1):
+    print("There is different numbers")
+
+if not power == 10:
+    print("Power is bigger than 10")
+
+#Assignment operators
+
+c = a + b
+print(f"c = a + b ={c}")
+
+c += a
+print(f"c += a = {c}")
+
+c -= b
+print(f"c -= b = {c}")
+
+c *= a
+print(f"c *= a = {c}")
+
+c /= b
+print(f"c /= b = {c}")
+
+c %= a
+print(f"c %= a = {c}")
+
+c //= b
+print(f"c //= b = {c}")
+
+#Bitwise Operators
+
+d = a & int(b)
+print(f"d = a & b = {d}")
+
+d = d | int(c)
+print(f"d = d & c = {d}")
+
+d = ~ d
+print(f"d = ~ d = {d}")
+
+d = d ^ int(c)
+print(f"d = d & c = {d}")
+
+d = d >> 2
+print(f"d = d >> 2 = {d}")
+
+d = d << 10
+print(f"d = d << 10 = {d}")
+
+#Membership Operators
+
+e = [c,a,b,d]
+f = [a,b,c]
+
+if b in e:
+    print("b is a part of e!")
+elif d not in e:
+    print("d isn't in f.")
+
+#Identity Operators
+j = 1024
+i = -1
+g = j*i
+
+if d is g:
+    print("Full match!")
+else:
+    print(f"Failed... {d} {g}")
+
+g = d
+if g is not d:
+    print("g is in another memory dump than d")
+else:
+    print("g and d are in same memory dump")
+
+
+
+
+
+
+
+
+
+
+ 

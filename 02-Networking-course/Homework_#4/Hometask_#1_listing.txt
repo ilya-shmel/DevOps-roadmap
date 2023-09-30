@@ -1,0 +1,141 @@
+[ilya@localhost ~]$ sudo yum install dhcp
+[sudo] password for ilya: 
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: mirrors.powernet.com.ru
+ * extras: mirrors.powernet.com.ru
+ * updates: mirror.corbina.net
+Resolving Dependencies
+--> Running transaction check
+---> Package dhcp.x86_64 12:4.2.5-83.el7.centos.1 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+==============================================================================================================================================================================================================================================================
+ Package                                                Arch                                                     Version                                                                      Repository                                                 Size
+==============================================================================================================================================================================================================================================================
+Installing:
+ dhcp                                                   x86_64                                                   12:4.2.5-83.el7.centos.1                                                     updates                                                   515 k
+
+Transaction Summary
+==============================================================================================================================================================================================================================================================
+Install  1 Package
+
+Total download size: 515 k
+Installed size: 1.4 M
+Is this ok [y/d/N]: y
+Downloading packages:
+dhcp-4.2.5-83.el7.centos.1.x86_64.rpm                                                                                                                                                                                                  | 515 kB  00:00:00     
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : 12:dhcp-4.2.5-83.el7.centos.1.x86_64                                                                                                                                                                                                       1/1 
+  Verifying  : 12:dhcp-4.2.5-83.el7.centos.1.x86_64                                                                                                                                                                                                       1/1 
+
+Installed:
+  dhcp.x86_64 12:4.2.5-83.el7.centos.1                                                                                                                                                                                                                        
+
+Complete!
+[ilya@localhost ~]$ sudo vi /etc/dhcp/dhcp.conf
+[sudo] password for ilya: 
+[ilya@localhost ~]$ vi /etc/dhcp/dhcp.conf
+[ilya@localhost ~]$ sudo vi /etc/dhcp/dhcp.conf
+[sudo] password for ilya: 
+[ilya@localhost ~]$ dhcpd -t -cf/etc/dhcp/dhcp.conf
+Internet Systems Consortium DHCP Server 4.2.5
+Copyright 2004-2013 Internet Systems Consortium.
+All rights reserved.
+Usage: dhcpd [-p <UDP port #>] [-f] [-d] [-q] [-t|-T]
+             [-4|-6] [-cf config-file] [-lf lease-file]
+             [-user user] [-group group] [-chroot dir]
+             [-tf trace-output-file]
+             [-play trace-input-file]
+             [-pf pid-file] [--no-pid] [-s server]
+             [if0 [...ifN]]
+
+This version of ISC DHCP is based on the release available
+on ftp.isc.org.  Features have been added and other changes
+have been made to the base software release in order to make
+it work better with this distribution.
+
+Please report for this software via the CentOS Bugs Database:
+    http://bugs.centos.org/
+
+exiting.
+[ilya@localhost ~]$ dhcpd -t -cf /etc/dhcp/dhcp.conf
+Internet Systems Consortium DHCP Server 4.2.5
+Copyright 2004-2013 Internet Systems Consortium.
+All rights reserved.
+For info, please visit https://www.isc.org/software/dhcp/
+Can't open /etc/dhcp/dhcp.conf: Permission denied
+
+This version of ISC DHCP is based on the release available
+on ftp.isc.org.  Features have been added and other changes
+have been made to the base software release in order to make
+it work better with this distribution.
+
+Please report for this software via the CentOS Bugs Database:
+    http://bugs.centos.org/
+
+exiting.
+[ilya@localhost ~]$ sudo dhcpd -t -cf /etc/dhcp/dhcp.conf
+Internet Systems Consortium DHCP Server 4.2.5
+Copyright 2004-2013 Internet Systems Consortium.
+All rights reserved.
+For info, please visit https://www.isc.org/software/dhcp/
+/etc/dhcp/dhcp.conf line 4: semicolon expected.
+	option-domain-name "homebase.local"
+                            ^
+Configuration file errors encountered -- exiting
+
+This version of ISC DHCP is based on the release available
+on ftp.isc.org.  Features have been added and other changes
+have been made to the base software release in order to make
+it work better with this distribution.
+
+Please report for this software via the CentOS Bugs Database:
+    http://bugs.centos.org/
+
+exiting.
+[ilya@localhost ~]$ sudo vi /etc/dhcp/dhcp.conf
+[ilya@localhost ~]$ sudo vi /etc/dhcp/dhcp.conf
+[ilya@localhost ~]$ sudo vi /etc/dhcp/dhcp.conf
+[ilya@localhost ~]$ sudo dhcpd -t -cf /etc/dhcp/dhcp.conf
+Internet Systems Consortium DHCP Server 4.2.5
+Copyright 2004-2013 Internet Systems Consortium.
+All rights reserved.
+For info, please visit https://www.isc.org/software/dhcp/
+Not searching LDAP since ldap-server, ldap-port and ldap-base-dn were not specified in the config file
+[ilya@localhost ~]$ sudo vi /etc/dhcp/dhcp.conf
+[ilya@localhost ~]$ sudo vi /etc/dhcp/dhcp.conf
+ilya@localhost ~]$ sudo firewall-cmd --permanent --add-service=dhcp
+[sudo] password for ilya: 
+success
+
+Client Section
+
+[ilya@localhost ~]$ sudo dhclient -r
+[sudo] password for ilya: 
+[ilya@localhost ~]$ sudo dhclient -v ens33
+Internet Systems Consortium DHCP Client 4.2.5
+Copyright 2004-2013 Internet Systems Consortium.
+All rights reserved.
+For info, please visit https://www.isc.org/software/dhcp/
+
+Listening on LPF/ens33/00:0c:29:00:47:6b
+Sending on   LPF/ens33/00:0c:29:00:47:6b
+Sending on   Socket/fallback
+DHCPDISCOVER on ens33 to 255.255.255.255 port 67 interval 4 (xid=0x1158c4a0)
+DHCPREQUEST on ens33 to 255.255.255.255 port 67 (xid=0x1158c4a0)
+DHCPOFFER from 192.168.243.254
+DHCPACK from 192.168.243.254 (xid=0x1158c4a0)
+bound to 192.168.243.133 -- renewal in 730 seconds.
+[ilya@localhost ~]$ 
+
+
+
+
+
+

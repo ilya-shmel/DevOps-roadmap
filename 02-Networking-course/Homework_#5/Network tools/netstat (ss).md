@@ -1,0 +1,31 @@
+# netstat (ss)
+
+ss is used to dump socket statistics. It allows the showing information similar to netstat. It can play more TCP and state information than other tools.
+
+```bash
+Ilya@homepc storage]$ ss -tulnp
+Netid               State                Recv-Q               Send-Q                                                    Local Address:Port                              Peer Address:Port              Process                                                
+udp                 UNCONN               0                    0                                                             127.0.0.1:323                                    0.0.0.0:*                                                                        
+udp                 UNCONN               0                    0                                                               0.0.0.0:59569                                  0.0.0.0:*                                                                        
+udp                 UNCONN               0                    0                                                           224.0.0.251:5353                                   0.0.0.0:*                  users:(("vivaldi-bin",pid=8227,fd=195))               
+udp                 UNCONN               0                    0                                                           224.0.0.251:5353                                   0.0.0.0:*                  users:(("vivaldi-bin",pid=8227,fd=194))               
+udp                 UNCONN               0                    0                                                           224.0.0.251:5353                                   0.0.0.0:*                  users:(("vivaldi-bin",pid=8227,fd=193))               
+udp                 UNCONN               0                    0                                                               0.0.0.0:5353                                   0.0.0.0:*                                                                   
+udp                 UNCONN               0                    0                                                               0.0.0.0:5355                                   0.0.0.0:*                                                                      
+udp                 UNCONN               0                    0                                                         192.168.122.1:53                                     0.0.0.0:*                                                                        
+udp                 UNCONN               0                    0                                                         127.0.0.53%lo:53                                     0.0.0.0:*                                                                        
+udp                 UNCONN               0                    0                                                        0.0.0.0%virbr0:67                                     0.0.0.0:*                                                                        
+udp                 UNCONN               0                    0                                                                 [::1]:323                                       [::]:*                                                                        
+udp                 UNCONN               0                    0                                  [fe80::d344:f114:f02a:b071]%wlp7s0u1:546                                       [::]:*                                                                        
+udp                 UNCONN               0                    0                                                                  [::]:5353                                      [::]:*                                                                        
+udp                 UNCONN               0                    0                                                                  [::]:5355                                      [::]:*                                                                        
+udp                 UNCONN               0                    0                                                                  [::]:54611                                     [::]:*                                                                        
+tcp                 LISTEN               0                    5                                                               0.0.0.0:902                                    0.0.0.0:*                                                                        
+tcp                 LISTEN               0                    4096                                                            0.0.0.0:5355                                   0.0.0.0:*                                                                        
+tcp                 LISTEN               0                    32                                                        192.168.122.1:53                                     0.0.0.0:*                                                                        
+tcp                 LISTEN               0                    4096                                                      127.0.0.53%lo:53                                     0.0.0.0:*                                                                        
+tcp                 LISTEN               0                    128                                                           127.0.0.1:631                                    0.0.0.0:*                                                                        
+tcp                 LISTEN               0                    5                                                                  [::]:902                                       [::]:*                                                                        
+tcp                 LISTEN               0                    4096                                                               [::]:5355                                      [::]:*                                                                        
+tcp                 LISTEN               0                    128                                                               [::1]:631                                       [::]:*     
+```

@@ -1,0 +1,116 @@
+========================================================================================================
+1. Display the size of your disk partitions using df into a separate file.
+========================================================================================================
+
+[Ilya@homepc ~]$ df -Th | grep "^/dev" | tee ~/Desktop/partitions.txt 
+/dev/sda2      btrfs     111G   67G   44G  61% /
+/dev/sda2      btrfs     111G   67G   44G  61% /home
+/dev/sda1      ext4      976M  261M  648M  29% /boot
+/dev/sdb2      fuseblk   789G  612G  178G  78% /mnt
+/dev/sda2      btrfs     111G   67G   44G  61% /run/timeshift/backup
+
+[Ilya@homepc Desktop]$ cat partitions.txt
+/dev/sda2      btrfs     111G   67G   44G  61% /
+/dev/sda2      btrfs     111G   67G   44G  61% /home
+/dev/sda1      ext4      976M  261M  648M  29% /boot
+/dev/sdb2      fuseblk   789G  612G  178G  78% /mnt
+/dev/sda2      btrfs     111G   67G   44G  61% /run/timeshift/backup
+
+========================================================================================================
+2. Through the cat, reduce the number of columns to three, leaving only Filesystem, USE and Mounted on.
+========================================================================================================
+
+[Ilya@homepc Desktop]$ df -Th | tee partitions.txt
+Filesystem     Type      Size  Used Avail Use% Mounted on
+devtmpfs       devtmpfs  7,8G     0  7,8G   0% /dev
+tmpfs          tmpfs     7,8G   55M  7,8G   1% /dev/shm
+tmpfs          tmpfs     3,2G  2,9M  3,2G   1% /run
+/dev/sda2      btrfs     111G   67G   44G  61% /
+tmpfs          tmpfs     7,8G   33M  7,8G   1% /tmp
+/dev/sda2      btrfs     111G   67G   44G  61% /home
+/dev/sda1      ext4      976M  261M  648M  29% /boot
+/dev/sdb2      fuseblk   789G  611G  179G  78% /mnt
+tmpfs          tmpfs     1,6G  184K  1,6G   1% /run/user/1000
+/dev/sda2      btrfs     111G   67G   44G  61% /run/timeshift/backup
+
+[Ilya@homepc Desktop]$ cat partitions.txt | tr -s " " | cut -d " " -f 2,6,7
+Type Use% Mounted
+devtmpfs 0% /dev
+tmpfs 1% /dev/shm
+tmpfs 1% /run
+btrfs 61% /
+tmpfs 1% /tmp
+btrfs 61% /home
+ext4 29% /boot
+fuseblk 78% /mnt
+tmpfs 1% /run/user/1000
+btrfs 61% /run/timeshift/backup
+
+[Ilya@homepc Desktop]$ df -Th | tee partitions.txt
+Filesystem     Type      Size  Used Avail Use% Mounted on
+devtmpfs       devtmpfs  7,8G     0  7,8G   0% /dev
+tmpfs          tmpfs     7,8G   55M  7,8G   1% /dev/shm
+tmpfs          tmpfs     3,2G  2,9M  3,2G   1% /run
+/dev/sda2      btrfs     111G   67G   44G  61% /
+tmpfs          tmpfs     7,8G   33M  7,8G   1% /tmp
+/dev/sda2      btrfs     111G   67G   44G  61% /home
+/dev/sda1      ext4      976M  261M  648M  29% /boot
+/dev/sdb2      fuseblk   789G  611G  179G  78% /mnt
+tmpfs          tmpfs     1,6G  184K  1,6G   1% /run/user/1000
+/dev/sda2      btrfs     111G   67G   44G  61% /run/timeshift/backup
+
+
+[Ilya@homepc Desktop]$ cat partitions.txt | tr -s " " | cut -d " " -f 2,6,7
+Type Use% Mounted
+devtmpfs 0% /dev
+tmpfs 1% /dev/shm
+tmpfs 1% /run
+btrfs 61% /
+tmpfs 1% /tmp
+btrfs 61% /home
+ext4 29% /boot
+fuseblk 78% /mnt
+tmpfs 1% /run/user/1000
+btrfs 61% /run/timeshift/backup
+
+========================================================================================================
+3. Sort the obtained values in the second step;
+========================================================================================================
+
+[Ilya@homepc Desktop]$ cat partitions.txt | tr -s " " | cut -d " " -f 2,6,7 | sort -nr
+Type Use% Mounted
+tmpfs 1% /tmp
+tmpfs 1% /run/user/1000
+tmpfs 1% /run
+tmpfs 1% /dev/shm
+fuseblk 78% /mnt
+ext4 29% /boot
+devtmpfs 0% /dev
+btrfs 61% /run/timeshift/backup
+btrfs 61% /home
+btrfs 61% /
+
+========================================================================================================
+4. Define the size of all files and folders in the / etc directory.
+========================================================================================================
+
+[Ilya@homepc etc]$ sudo du -sh /etc
+32M	/etc
+
+========================================================================================================
+5. Sort the output to show only the TOP 10 largest files.
+========================================================================================================
+
+[Ilya@homepc etc]$ sudo du -ah /etc | sort -nr | head -n 10
+1020K	/etc/brltty/Input
+1016K	/etc/selinux/targeted/contexts/files
+920K	/etc/brltty/Text
+912K	/etc/pki/ca-trust
+896K	/etc/pki/ca-trust/extracted
+700K	/etc/mono
+680K	/etc/services
+628K	/etc/brltty/Contraction/zh-tw.cti
+576K	/etc/ssh
+568K	/etc/selinux/targeted/contexts/files/file_contexts.bin
+
+
